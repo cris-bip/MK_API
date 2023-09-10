@@ -1,7 +1,6 @@
 package mx.org.bm.gamesrf.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,48 +10,47 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import mx.org.bm.gamesrf.R
-import mx.org.bm.gamesrf.application.GamesRFApp
-import mx.org.bm.gamesrf.data.GameRepository
-import mx.org.bm.gamesrf.data.remote.model.GameDetailDto
-import mx.org.bm.gamesrf.databinding.FragmentGameDetailBinding
-import mx.org.bm.gamesrf.util.Constants
+import mx.org.bm.gamesrf.application.MKRFApp
+import mx.org.bm.gamesrf.data.MKRepository
+import mx.org.bm.gamesrf.data.remote.model.CharacterDetailDto
+import mx.org.bm.gamesrf.databinding.FragmentDetailBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val GAME_ID = "game_id"
+private const val ID = "id"
 
-class GameDetailFragment : Fragment() {
-    private var gameId: String? = null
+class DetailFragment : Fragment() {
+    private var id: String? = null
 
-    private var _binding: FragmentGameDetailBinding? = null
+    private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var repository: GameRepository
+    private lateinit var repository: MKRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            gameId = it.getString(GAME_ID)
+            id = it.getString(ID)
 
-            Log.d(Constants.LOGTAG, "ID: $gameId")
-
-            repository = (requireActivity().application as GamesRFApp).repository
+            repository = (requireActivity().application as MKRFApp).repository
 
             lifecycleScope.launch {
-                gameId?.let {id ->
-                    //val call: Call<GameDetailDto> = repository.getGameDetail(id)
-                    val call: Call<GameDetailDto> = repository.getGameDetailApiary(id)
+                id?.let { id ->
+                    val call: Call<CharacterDetailDto> = repository.getCharacterDetail(id)
 
-                    call.enqueue(object : Callback<GameDetailDto>{
+                    call.enqueue(object : Callback<CharacterDetailDto>{
                         override fun onResponse(
-                            call: Call<GameDetailDto>,
-                            response: Response<GameDetailDto>
+                            call: Call<CharacterDetailDto>,
+                            response: Response<CharacterDetailDto>
                         ) {
                             binding.apply {
                                 pbLoading.visibility = View.GONE
-                                tvTitle.text = response.body()?.title
-                                tvLongDesc.text = response.body()?.longDesc
+                                tvTitle.text = response.body()?.name
+                                tvLongDesc.text = response.body()?.realm
+                                tvFrendship.text = response.body()?.friendship
+                                tvFatality.text = response.body()?.fatality
+                                tvBrutality.text = response.body()?.brutality
 
                                 Glide.with(requireContext())
                                     .load(response.body()?.image)
@@ -60,12 +58,11 @@ class GameDetailFragment : Fragment() {
                             }
                         }
 
-                        override fun onFailure(call: Call<GameDetailDto>, t: Throwable) {
+                        override fun onFailure(call: Call<CharacterDetailDto>, t: Throwable) {
                             binding.pbLoading.visibility = View.GONE
 
-                            Toast.makeText(requireActivity(), "No hay conexión", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireActivity(), getString(R.string.no_connection_msg), Toast.LENGTH_SHORT).show()
                         }
-
                     })
                 }
             }
@@ -76,7 +73,7 @@ class GameDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGameDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -93,10 +90,10 @@ class GameDetailFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(gameId: String) =
-            GameDetailFragment().apply {
+        fun newInstance(id: String) =
+            DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(GAME_ID, gameId)
+                    putString(ID, id)
                 }
             }
     }

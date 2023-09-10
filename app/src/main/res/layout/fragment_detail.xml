@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#141A31"
-    tools:context=".ui.fragments.GameDetailFragment">
+    android:background="#000000"
+    tools:context=".ui.fragments.DetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                         android:paddingBottom="10dp"
                         android:textColor="@color/white"
                         android:textSize="25sp"
-                        tools:text="Title" />
+                        tools:text="@string/title_label" />
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImage"
@@ -56,6 +56,12 @@
                         tools:src="@mipmap/ic_launcher" />
 
                     <TextView
+                        android:text="@string/realm_label"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
                         android:id="@+id/tvLongDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -66,7 +72,64 @@
                         android:paddingBottom="10dp"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        tools:text="Description" />
+                        tools:text="@string/description_label" />
+
+                    <TextView
+                        android:text="@string/friendship_label"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tvFrendship"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="@string/description_label" />
+
+                    <TextView
+                        android:text="@string/fatality_label"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tvFatality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="@string/description_label" />
+
+                    <TextView
+                        android:text="@string/brutality_label"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tvBrutality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="@string/description_label" />
                 </LinearLayout>
             </ScrollView>
 

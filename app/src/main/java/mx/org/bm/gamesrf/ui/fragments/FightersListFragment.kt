@@ -1,7 +1,6 @@
 package mx.org.bm.gamesrf.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,7 @@ import mx.org.bm.gamesrf.application.MKRFApp
 import mx.org.bm.gamesrf.data.MKRepository
 import mx.org.bm.gamesrf.data.remote.model.CharacterItemDto
 import mx.org.bm.gamesrf.databinding.FragmentFightersListBinding
-import mx.org.bm.gamesrf.ui.adapters.GamesAdapter
-import mx.org.bm.gamesrf.util.Constants
+import mx.org.bm.gamesrf.ui.adapters.MKAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,16 +56,14 @@ class FightersListFragment : Fragment() {
 
                     binding.pbLoading.visibility = View.GONE
 
-                    Log.d(Constants.LOGTAG, "Respuesta del servidor: ${response.body()}")
-
                     response.body()?.let {list ->
                         binding.rvGames.apply {
                             layoutManager = LinearLayoutManager(requireContext())
-                            adapter = GamesAdapter(list){element ->
-                                element.id?.let{id ->
+                            adapter = MKAdapter(list){ element ->
+                                element.id.let{ id ->
                                     // Mostrar detalle
                                     requireActivity().supportFragmentManager.beginTransaction()
-                                        .replace(R.id.fragment_container, GameDetailFragment.newInstance(id))
+                                        .replace(R.id.fragment_container, DetailFragment.newInstance(id))
                                         .addToBackStack(null)
                                         .commit()
                                 }
@@ -77,9 +73,7 @@ class FightersListFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<List<CharacterItemDto>>, t: Throwable) {
-                    Log.d(Constants.LOGTAG, "Error: ${t.message}")
-
-                    Toast.makeText(requireActivity(), "No hay conexión", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), getString(R.string.no_connection_msg), Toast.LENGTH_SHORT).show()
 
                     binding.pbLoading.visibility = View.GONE
                 }
