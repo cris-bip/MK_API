@@ -11,6 +11,8 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">#060204</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/cookie_icon</item>
     </style>
 </resources>
