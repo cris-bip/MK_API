@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startService(Intent(this, SoundService::class.java))
+        //startService(Intent(this, SoundService::class.java))
 
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction()

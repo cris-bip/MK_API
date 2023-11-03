@@ -130,6 +130,25 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         tools:text="@string/description_label" />
+                    <TextView
+                        android:text="@string/kombats_label"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <FrameLayout
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:background="@color/white">
+                        <VideoView
+                            android:id="@+id/vvVideo"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_margin="5dp"
+                            />
+                    </FrameLayout>
                 </LinearLayout>
             </ScrollView>
 

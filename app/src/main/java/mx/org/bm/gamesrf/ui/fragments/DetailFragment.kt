@@ -1,10 +1,12 @@
 package mx.org.bm.gamesrf.ui.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -55,6 +57,13 @@ class DetailFragment : Fragment() {
                                 Glide.with(requireContext())
                                     .load(response.body()?.image)
                                     .into(ivImage)
+
+                                vvVideo.setVideoURI(Uri.parse(response.body()?.video))
+
+                                val mc = MediaController(requireContext())
+                                mc.setAnchorView(vvVideo)
+                                vvVideo.setMediaController(mc)
+                                vvVideo.start()
                             }
                         }
 
