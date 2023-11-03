@@ -15,6 +15,9 @@
         android:theme="@style/Theme.GamesRF"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <service android:name=".util.SoundService"/>
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
