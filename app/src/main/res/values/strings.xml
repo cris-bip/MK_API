@@ -10,4 +10,5 @@
     <string name="title_label">Title</string>
     <string name="description_label">Description</string>
     <string name="kombats_label">Retro Fights:</string>
+    <string name="stop_music_btn_label">Stop Music</string>
 </resources>
