@@ -10,6 +10,14 @@ import android.widget.MediaController
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 import mx.org.bm.gamesrf.R
 import mx.org.bm.gamesrf.application.MKRFApp
@@ -19,16 +27,24 @@ import mx.org.bm.gamesrf.databinding.FragmentDetailBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 private const val ID = "id"
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), OnMapReadyCallback{
     private var id: String? = null
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var repository: MKRepository
+
+    private val decimalsFormat = DecimalFormat("###,###,###.00")
+
+    private lateinit var map: GoogleMap
+    private var latitude: Double = 0.0
+    private var longitud: Double = 0.0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +80,12 @@ class DetailFragment : Fragment() {
                                 mc.setAnchorView(vvVideo)
                                 vvVideo.setMediaController(mc)
                                 vvVideo.start()
+
+                                latitude = response.body()?.locationLat!!
+                                longitud = response.body()?.locationLng!!
+
+                                var mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+                                mapFragment.getMapAsync(this@DetailFragment)
                             }
                         }
 
@@ -105,5 +127,27 @@ class DetailFragment : Fragment() {
                     putString(ID, id)
                 }
             }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+
+        createMarker()
+    }
+
+    private fun createMarker(){
+        val coordinates = LatLng(latitude, longitud)
+        val marker = MarkerOptions()
+            .position(coordinates)
+            .title("Location: (${decimalsFormat.format(latitude)}, ${decimalsFormat.format(longitud)})")
+            .icon(BitmapDescriptorFactory.fromResource(R.drawable.person))
+
+        map.addMarker(marker)
+
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(coordinates, 18f),
+            4_000,
+            null
+        )
     }
 }

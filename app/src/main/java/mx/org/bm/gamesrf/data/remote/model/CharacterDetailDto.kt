@@ -8,5 +8,7 @@ data class CharacterDetailDto(
     val image: String,
     val name: String,
     val realm: String,
-    val video: String
+    val video: String,
+    val locationLat: Double,
+    val locationLng: Double
 )
