@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="MK"
+                    android:text="@string/mk_label"
                     android:textColor="#707070"
                     android:textSize="75sp" />
 
@@ -39,7 +39,7 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wiki"
+                    android:text="@string/wiki_label"
                     android:textColor="#D7A61D"
                     android:textSize="75sp"
                     android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
-                android:hint="Correo electrónico"
+                android:hint="@string/email_hint"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -77,7 +77,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
-                android:hint="Contraseña"
+                android:hint="@string/password_hint"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -102,7 +102,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:backgroundTint="@android:color/holo_orange_dark"
-                android:text="Ingresar"
+                android:text="@string/login_button_label"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
@@ -117,7 +117,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:backgroundTint="@color/black"
-                android:text="Registrarse"
+                android:text="@string/new_user_btn_label"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
@@ -131,7 +131,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="¿Olvidó su contraseña? Restablecer aquí"
+                android:text="@string/forgot_pass_label"
                 android:textAlignment="center"
                 android:textColor="#0E66CC"
                 android:textSize="16sp" />

@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import mx.org.bm.gamesrf.R
 import mx.org.bm.gamesrf.databinding.ActivityLoginBinding
 
 class Login : AppCompatActivity() {
@@ -42,12 +43,12 @@ class Login : AppCompatActivity() {
                     //Enviar correo para verificación de email
                     var user_fb = firebaseAuth.currentUser
                     user_fb?.sendEmailVerification()?.addOnSuccessListener {
-                        Toast.makeText(this, "El correo de verificación ha sido enviado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.email_verify_msg), Toast.LENGTH_SHORT).show()
                     }?.addOnFailureListener {
-                        Toast.makeText(this, "No se pudo enviar el correo de verificación", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.varify_email_erro_msg), Toast.LENGTH_SHORT).show()
                     }
 
-                    Toast.makeText(this, "Usuario creado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.usr_created_confirm_msg), Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -72,16 +73,16 @@ class Login : AppCompatActivity() {
             resetMail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 
             val passwordResetDialog = AlertDialog.Builder(it.context)
-                .setTitle("Restablecer contraseña")
-                .setMessage("Ingrese su correo para recibir el enlace para restablecer")
+                .setTitle(getString(R.string.forgot_password_msg))
+                .setMessage(getString(R.string.email_redo_msg))
                 .setView(resetMail)
-                .setPositiveButton("Enviar") { _, _ ->
+                .setPositiveButton(getString(R.string.send_btn_msg)) { _, _ ->
                     val mail = resetMail.text.toString()
                     if (mail.isNotEmpty()) {
                         firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener {
                             Toast.makeText(
                                 this,
-                                "El enlace para restablecer la contraseña ha sido enviado a su correo",
+                                getString(R.string.redo_email_confirm_msg),
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
@@ -96,12 +97,12 @@ class Login : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this,
-                            "Favor de ingresar la dirección de correo",
+                            getString(R.string.email_error_msg),
                             Toast.LENGTH_SHORT
                         )
                             .show()
                     }
-                }.setNegativeButton("Cancelar") { dialog, _ ->
+                }.setNegativeButton(getString(R.string.cancel_btn_label)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
@@ -112,11 +113,9 @@ class Login : AppCompatActivity() {
     private fun autenticaUsuario(usr: String, psw: String){
         firebaseAuth.signInWithEmailAndPassword(usr, psw).addOnCompleteListener {resultTask->
             if(resultTask.isSuccessful){
-                Toast.makeText(this, "Autenticación exitosa", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.auth_succed_msg), Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("psw", psw)
-
                 startActivity(intent)
 
                 finish()
@@ -140,42 +139,42 @@ class Login : AppCompatActivity() {
 
         when(errorCode){
             "ERROR_INVALID_EMAIL" -> {
-                Toast.makeText(this, "Error: El correo electrónico no tiene un formato correcto", Toast.LENGTH_SHORT).show()
-                binding.tietEmail.error = "Error: El correo electrónico no tiene un formato correcto"
+                Toast.makeText(this, getString(R.string.email_format_error_msg), Toast.LENGTH_SHORT).show()
+                binding.tietEmail.error = getString(R.string.email_format_error_msg)
                 binding.tietEmail.requestFocus()
             }
             "ERROR_WRONG_PASSWORD" -> {
-                Toast.makeText(this, "Error: La contraseña no es válida", Toast.LENGTH_SHORT).show()
-                binding.tietContrasenia.error = "La contraseña no es válida"
+                Toast.makeText(this, getString(R.string.password_error_msg), Toast.LENGTH_SHORT).show()
+                binding.tietContrasenia.error = getString(R.string.password_error_msg)
                 binding.tietContrasenia.requestFocus()
                 binding.tietContrasenia.setText("")
 
             }
             "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL" -> {
                 //An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.
-                Toast.makeText(this, "Error: Una cuenta ya existe con el mismo correo, pero con diferentes datos de ingreso", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.unconsistent_error_msg), Toast.LENGTH_SHORT).show()
             }
             "ERROR_EMAIL_ALREADY_IN_USE" -> {
-                Toast.makeText(this, "Error: el correo electrónico ya está en uso con otra cuenta.", Toast.LENGTH_LONG).show()
-                binding.tietEmail.error = ("Error: el correo electrónico ya está en uso con otra cuenta.")
+                Toast.makeText(this, getString(R.string.email_used_error_msg), Toast.LENGTH_LONG).show()
+                binding.tietEmail.error = getString(R.string.email_used_error_msg)
                 binding.tietEmail.requestFocus()
             }
             "ERROR_USER_TOKEN_EXPIRED" -> {
-                Toast.makeText(this, "Error: La sesión ha expirado. Favor de ingresar nuevamente.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.session_expiration_error_msg), Toast.LENGTH_LONG).show()
             }
             "ERROR_USER_NOT_FOUND" -> {
-                Toast.makeText(this, "Error: No existe el usuario con la información proporcionada.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.user_not_found_error_msg), Toast.LENGTH_LONG).show()
             }
             "ERROR_WEAK_PASSWORD" -> {
-                Toast.makeText(this, "La contraseña porporcionada es inválida", Toast.LENGTH_LONG).show()
-                binding.tietContrasenia.error = "La contraseña debe de tener por lo menos 6 caracteres"
+                Toast.makeText(this, getString(R.string.password_incorrect_error_msg), Toast.LENGTH_LONG).show()
+                binding.tietContrasenia.error = getString(R.string.password_incorrect_error_msg)
                 binding.tietContrasenia.requestFocus()
             }
             "NO_NETWORK" -> {
-                Toast.makeText(this, "Red no disponible o se interrumpió la conexión", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.unestable_conn_error_msg), Toast.LENGTH_LONG).show()
             }
             else -> {
-                Toast.makeText(this, "Error. No se pudo autenticar exitosamente.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.auth_unsucced_msg), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -186,13 +185,13 @@ class Login : AppCompatActivity() {
         contrasenia = binding.tietContrasenia.text.toString().trim()
 
         if(email.isEmpty()){
-            binding.tietEmail.error = "Se requiere el correo"
+            binding.tietEmail.error = getString(R.string.email_req_msg)
             binding.tietEmail.requestFocus()
             return false
         }
 
         if(contrasenia.isEmpty() || contrasenia.length < 6){
-            binding.tietContrasenia.error = "Se requiere una contraseña o la contraseña no tiene por lo menos 6 caracteres"
+            binding.tietContrasenia.error = getString(R.string.password_requirements_msg)
             binding.tietContrasenia.requestFocus()
             return false
         }
