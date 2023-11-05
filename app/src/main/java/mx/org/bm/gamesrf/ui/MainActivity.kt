@@ -28,7 +28,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnStopSound.setOnClickListener {
-            stopService(Intent(this, SoundService::class.java))
+            stopService()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        startService(Intent(this, SoundService::class.java))
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        stopService()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        stopService()
+    }
+
+    private fun stopService(){
+        stopService(Intent(this, SoundService::class.java))
     }
 }
